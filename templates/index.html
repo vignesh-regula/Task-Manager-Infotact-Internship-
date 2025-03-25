@@ -1,12 +1,53 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task Manager</title>
 </head>
 <body>
-    welcome for now
+    <h1>Welcome, User!</h1>
+
+    <!-- Create Task Form -->
+    <form action="{{ url_for('create_task') }}" method="POST">
+        <!-- Hidden token field -->
+        <input type="hidden" name="token" value="{{ request.args.get('token') }}">
     
+        <input type="text" name="title" placeholder="Task Title" required>
+        <select name="priority">
+            <option value="urgent">Urgent</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <select name="status">
+            <option value="to-do">To-Do</option>
+            <option value="in-progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="on-hold">On Hold</option>
+        </select>
+        <input type="date" name="deadline" required>
+        <button type="submit">Create Task</button>
+    </form>
+    
+
+    <h2>Your Tasks</h2>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <h3>{{ task[1] }} - {{ task[2] }} Priority</h3>
+            <p>Status: {{ task[3] }} | Deadline: {{ task[4] }}</p>
+            <form action="{{ url_for('update_task', task_id=task[0]) }}" method="POST">
+                <input type="text" name="title" value="{{ task[1] }}" required>
+                <input type="date" name="deadline" value="{{ task[4] }}" required>
+                <button type="submit">Update Task</button>
+            </form>
+            <form action="{{ url_for('delete_task', task_id=task[0]) }}" method="POST">
+                <button type="submit">Delete Task</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
