@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector,os
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 # Database connection setup
@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 def get_db_connection():
     return mysql.connector.connect(
-        host=DB_HOST,
-        user='root',
-        password='regula',
-        database=''
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
 
 # Create a new user (with hashed password)
