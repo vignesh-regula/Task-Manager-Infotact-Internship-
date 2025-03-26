@@ -1,1 +1,1 @@
-app.config["SECRET_KEY"] = "8@e345%980yu06!2@004"
+.env
