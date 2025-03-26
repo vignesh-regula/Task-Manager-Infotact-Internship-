@@ -5,7 +5,7 @@ from functools import wraps
 import task_manager  # Import the task management functions
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "8@e345%980yu06!2@004"
+
 
 # Decorator to protect routes that require a valid token
 def token_required(func):
